@@ -1,6 +1,9 @@
 const sequelize = require("../config/connection");
 const { Post, User, Comment } = require("../models");
 const router = require("express").Router();
+
+//Show Posts and send to LOGIN or SIGNUP, no DELETE
+
 router.get("/", (req, res) => {
   Post.findAll({
     attributes: ["id", "title", "content", "created_at"],
@@ -59,7 +62,7 @@ router.get("/post/:id", (req, res) => {
         return;
       }
       const post = dbPostData.get({ plain: true });
-      console.log(post);
+      //de console.log(post);
       res.render("onePost", { post, loggedIn: req.session.loggedIn });
     })
     .catch((err) => {
