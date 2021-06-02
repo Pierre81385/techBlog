@@ -25,8 +25,8 @@ router.get("/", (req, res) => {
     // .then((postData) => {
     //   res.json(postData);
     // })
-    .then((dbPostData) => {
-      const posts = dbPostData.map((post) => post.get({ plain: true }));
+    .then((data) => {
+      const posts = data.map((post) => post.get({ plain: true }));
       res.render("homepage", { posts, loggedIn: req.session.loggedIn });
     })
     .catch((err) => {
@@ -56,12 +56,12 @@ router.get("/post/:id", (req, res) => {
       },
     ],
   })
-    .then((dbPostData) => {
-      if (!dbPostData) {
+    .then((data) => {
+      if (!data) {
         res.status(404).json({ message: "No post found with this id" });
         return;
       }
-      const post = dbPostData.get({ plain: true });
+      const post = data.get({ plain: true });
       //de console.log(post);
       res.render("onePost", { post, loggedIn: req.session.loggedIn });
     })
