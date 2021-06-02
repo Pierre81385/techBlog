@@ -79,25 +79,25 @@ router.get("/:id", (req, res) => {
 //UPDATE TODO
 
 //DELETE
-router.delete("/:id", (req, res) => {
-  User.destroy({
-    where: {
-      id: req.params.id,
-    },
-  })
-    .then((data) => {
-      if (!data) {
-        res.status(404).json({ message: "No user found with this id" });
-        return;
-      }
-      console.log("deleting" + data);
-      res.json(data);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
-});
+// router.delete("/:id", (req, res) => {
+//   User.destroy({
+//     where: {
+//       id: req.params.id,
+//     },
+//   })
+//     .then((data) => {
+//       if (!data) {
+//         res.status(404).json({ message: "No user found with this id" });
+//         return;
+//       }
+//       console.log("deleting" + data);
+//       res.json(data);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       res.status(500).json(err);
+//     });
+// });
 
 //LOGIN and LOGOUT
 router.post("/login", (req, res) => {
@@ -107,6 +107,8 @@ router.post("/login", (req, res) => {
     },
   })
     .then((data) => {
+      console.log(data);
+
       if (!data) {
         console.log("No user with that name");
         res.status(400).json({ message: "No user with that username!" });
@@ -125,8 +127,7 @@ router.post("/login", (req, res) => {
         req.session.loggedIn = true;
 
         console.log("Logged in!");
-
-        res.json({ user: dbUserData, message: "You are now logged in!" });
+        res.json({ user: data, message: "You are now logged in!" });
       });
     })
     .catch((err) => {
