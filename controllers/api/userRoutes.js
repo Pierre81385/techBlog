@@ -108,12 +108,14 @@ router.post("/login", (req, res) => {
   })
     .then((data) => {
       if (!data) {
+        console.log("No user with that name");
         res.status(400).json({ message: "No user with that username!" });
         return;
       }
       const validPassword = data.checkPassword(req.body.password);
 
       if (!validPassword) {
+        console.log("No user with that password");
         res.status(400).json({ message: "Incorrect password!" });
         return;
       }
@@ -121,6 +123,8 @@ router.post("/login", (req, res) => {
         req.session.user_id = data.id;
         req.session.username = data.username;
         req.session.loggedIn = true;
+
+        console.log("Logged in!");
 
         res.json({ user: dbUserData, message: "You are now logged in!" });
       });
